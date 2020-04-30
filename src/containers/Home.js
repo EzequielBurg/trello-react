@@ -23,7 +23,7 @@ class Home extends Component {
                 <DndProvider backend={ backend }>
                     <div className="col-xs-12">
                         <button className="btn btn panel-button" onClick={ this.handleCreatePanel }>
-                            <i className="ion-plus-round"> New Card</i>
+                            <i className="ion-plus-round">New Card</i>
                         </button>
                     </div>
                     <Panels

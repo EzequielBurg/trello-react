@@ -28,7 +28,7 @@ db.getItem('Trello').then(value => value).then(value => configureStore(value)).t
                       <span className="icon-bar"></span>
                   </button>
                   <a href="javascript;void:0" className="navbar-brand">
-                      <img src="/images/tilt.jpeg" alt=""/>
+                      <img src="/images/trello.png" alt=""/>
                   </a>
               </div>
               <div className="navbar-collapse collapse" id="navbar">

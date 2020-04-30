@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { DragSource, DropTarget } from 'react-dnd'
 import * as Types from '../constants/Types'
+import PropTypes from 'prop-types'
 
 class Card extends Component {
+    static propTypes = {
+		connectDragSource: PropTypes.func.isRequired,
+		connectDropTarget: PropTypes.func.isRequired,		
+    }
+    
     render() {
         const { connectDragSource, connectDropTarget } = this.props
+
         return connectDragSource(
             connectDropTarget(
                 <li className="col-xs-12">
@@ -26,7 +33,7 @@ const dragNDropSrc = {
 const collect = (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
-    connectDragPreview: connect.dragPreview()
+    // connectDragPreview: connect.dragPreview()
 })
 
 const collectTarget = (connect, monitor) => ({

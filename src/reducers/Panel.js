@@ -34,47 +34,52 @@ export default function panels(state = [], action) {
         case ActionTypes.MOVE_CARD:
             const targetCardDropId = action.payload.id
             const monitorCardId    = action.payload.monitorId
-
-            let targetPanel        = state.filter(panel => panel.card.indexOf(targetCardDropId))
-            let monitorPanel       = state.filter(panel => panel.card.indexOf(monitorCardId))
-
-            targetPanel            = targetPanel[0]
-            monitorPanel           = monitorPanel[0]
+            
+            let targetPanel      = state.filter(panel => panel.cards.indexOf(targetCardDropId))
+            let monitorPanel     = state.filter(panel => panel.cards.indexOf(monitorCardId))
+            
+            targetPanel  		 = targetPanel[0]
+            monitorPanel 		 = monitorPanel[0]
 
             const targetCardIndex  = targetPanel.cards.indexOf(targetCardDropId)
             const monitorCardIndex = monitorPanel.cards.indexOf(monitorCardId)
-
-            if (targetPanel.id === monitorPanel.id)
-                return state.map(panel => {
+            
+            if (targetPanel.id === monitorPanel.id) {
+                return state.map((panel) => {
                     const panelId = panel.id
-
                     if (monitorPanel.id !== panelId)
                         return panel
 
                     return Object.assign({}, panel, {
                         cards: update(monitorPanel.cards, {
-                            $splice: [ [monitorCardIndex, 1], [targetCardIndex, 0, monitorCardId] ]
+                            $splice: [
+                                [monitorCardIndex, 1],
+                                [targetCardIndex, 0, monitorCardId]
+                            ]
                         })
                     })
                 })
-            
-            return state.map(panel => {
+            }
+
+            return state.map((panel) => {
                 const panelId = panel.id
                 if (targetPanel.id === panelId)
-                    return Object.assign({}, panel, {
-                        cards: update(panel.cards, {
-                            $splice: [ [targetCardIndex, 0, monitorId] ]
-                        })
+                return Object.assign({}, panel, {
+                    cards: update(panel.cards, {
+                        $splice: [
+                            [targetCardIndex, 0, monitorCardId]
+                        ]
                     })
+                })
                 
                 if (monitorPanel.id === panelId)
                     return Object.assign({}, panel, {
                         cards: update(panel.cards, {
-                            $splice: [ [monitorCardIndex, 1] ]
+                            $splice: [
+                                [monitorCardIndex, 1]
+                            ]
                         })
-                    })
-
-                return panel
+                    })					
             })
 
         case ActionTypes.INSERT_IN_PANEL:
@@ -105,7 +110,7 @@ export default function panels(state = [], action) {
 
             return state.map(panel => {
                 const { cards } = panel
-                if (panelIdRemove === panel.id)
+                if (panelIdRemove !== panel.id)
                     return panel
                 
                 return Object.assign({}, panel, {
